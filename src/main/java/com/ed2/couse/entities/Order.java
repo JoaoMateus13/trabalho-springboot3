@@ -1,16 +1,18 @@
 package com.ed2.couse.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.Instant;
 import java.util.Objects;
 
 
 @Entity
 @Table(name = "tb_order")
 
-public class order implements Serializable {
+public class Order implements Serializable {
 
     public static final long serialVersionUID = 1L;
 
@@ -18,11 +20,18 @@ public class order implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private Date moment;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern =
+            "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
+    private Instant moment;
 
     @ManyToOne
     @JoinColumn(name = "client_id")
+    //@JsonIgnore
     private  User client;
+
+    public Order() {
+    }
 
     public User getClient() {
         return client;
@@ -32,12 +41,10 @@ public class order implements Serializable {
         this.client = client;
     }
 
-    public order() {
-    }
-
-    public order(Integer id, Date moment) {
+    public Order(Integer id, Instant moment, User client) {
         this.id = id;
         this.moment = moment;
+        this.client = client;
     }
 
     public Integer getId() {
@@ -48,11 +55,11 @@ public class order implements Serializable {
         this.id = id;
     }
 
-    public Date getMoment() {
+    public Instant getMoment() {
         return moment;
     }
 
-    public void setMoment(Date moment) {
+    public void setMoment(Instant moment) {
         this.moment = moment;
     }
 
@@ -64,7 +71,7 @@ public class order implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        order order = (order) o;
+        Order order = (Order) o;
         return id.equals(order.id);
     }
 

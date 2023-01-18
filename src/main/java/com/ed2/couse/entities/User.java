@@ -1,5 +1,6 @@
 package com.ed2.couse.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -23,8 +24,8 @@ public class User implements Serializable {
 
 
     @OneToMany(mappedBy = ("client"))
-
-    private List<order> orders = new ArrayList<>();
+    @JsonIgnore
+    private List<Order> orders = new ArrayList<>();
 
     public User() {
     }
@@ -77,7 +78,7 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public List<order> getOrders() {
+    public List<Order> getOrders() {
         return orders;
     }
 
