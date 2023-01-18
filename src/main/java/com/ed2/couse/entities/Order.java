@@ -1,5 +1,6 @@
 package com.ed2.couse.entities;
 
+import com.ed2.couse.enums.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -25,6 +26,8 @@ public class Order implements Serializable {
             "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
     private Instant moment;
 
+    private Integer orderStatus;
+
     @ManyToOne
     @JoinColumn(name = "client_id")
     //@JsonIgnore
@@ -41,10 +44,11 @@ public class Order implements Serializable {
         this.client = client;
     }
 
-    public Order(Integer id, Instant moment, User client) {
+    public Order(Integer id, Instant moment, OrderStatus orderStatus, User client) {
         this.id = id;
         this.moment = moment;
         this.client = client;
+        setOrderStatus(orderStatus);
     }
 
     public Integer getId() {
@@ -53,6 +57,16 @@ public class Order implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public OrderStatus getOrderStatus() {
+        return OrderStatus.valueOF(orderStatus);
+    }
+
+    public void setOrderStatus(OrderStatus orderStatus) {
+        if (orderStatus != null) {
+            this.orderStatus = orderStatus.getCode();
+        }
     }
 
     public Instant getMoment() {
