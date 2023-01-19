@@ -5,9 +5,12 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import com.ed2.couse.entities.OrderItem;
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 
 @Entity
@@ -32,6 +35,10 @@ public class Order implements Serializable {
     @JoinColumn(name = "client_id")
     //@JsonIgnore
     private  User client;
+
+
+    @OneToMany(mappedBy = "id.order")
+    private Set<OrderItem> itens = new HashSet<>();
 
     public Order() {
     }
@@ -75,6 +82,10 @@ public class Order implements Serializable {
 
     public void setMoment(Instant moment) {
         this.moment = moment;
+    }
+
+    public Set<OrderItem> getItens(){
+        return itens;
     }
 
     public float total(){
