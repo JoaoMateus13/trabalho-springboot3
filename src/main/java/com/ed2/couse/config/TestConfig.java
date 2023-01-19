@@ -41,19 +41,31 @@ public class TestConfig implements CommandLineRunner {
         Order o2 = new Order(null, Instant.parse("2020-07-20T11:53:07Z"),OrderStatus.SHIPPED, u2);
         Order o3 = new Order(null, Instant.parse("2021-03-21T15:32:01Z"),OrderStatus.WAITING_PAYMENT, u2);
 
-        Category c1 = new Category(null, "João Mateus");
-        Category c2 = new Category(null, "João Lopes");
-        Category c3 = new Category(null, "João Pedro");
+        Category c1 = new Category(null, "Electronics");
+        Category c2 = new Category(null, "Books");
+        Category c3 = new Category(null, "Computers");
 
-        Product p1 = new Product(null, "carro", "é feio", 2600.0, "www.nãoquerosaber.com");
+       // Product p1 = new Product(null, "carro", "é feio", 2600.0, "www.nãoquerosaber.com");
+        Product p1 = new Product(null, "Rails for Dummies", "Cras fringilla convallis sem vel faucibus.", 100.99, "");
         Product p2 = new Product(null, "Smart TV", "Nulla eu imperdiet purus. Maecenas ante.", 2190.0, "");
         Product p3 = new Product(null, "Macbook Pro", "Nam eleifend maximus tortor, at mollis.", 1250.0, "");
-        Product p4 = new Product(null, "PC Gamer", "Donec aliquet odio ac rhoncus cursus.", 1200.0, "");
-        Product p5 = new Product(null, "Rails for Dummies", "Cras fringilla convallis sem vel faucibus.", 100.99, "");
+        Product p4 = new Product(null, "Rails for Dummies", "Cras fringilla convallis sem vel faucibus.", 100.99, "");
+        Product p5 = new Product(null, "PC Gamer", "Donec aliquet odio ac rhoncus cursus.", 1200.0, "");
 
         categoryRepository.saveAll(Arrays.asList(c1,c2,c3));
 
         productRepository.saveAll(Arrays.asList(p1,p2,p3,p4,p5));
+
+        p1.getCategories().add(c2);
+        p2.getCategories().add(c1);
+        p2.getCategories().add(c3);
+        p3.getCategories().add(c3);
+        p4.getCategories().add(c3);
+        p5.getCategories().add(c2);
+
+
+        productRepository.saveAll(Arrays.asList(p1,p2,p3,p4,p5));
+
 
 
         userRepository.saveAll(Arrays.asList(u1,u2));
