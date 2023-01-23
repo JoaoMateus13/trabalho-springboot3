@@ -91,8 +91,12 @@ public class Order implements Serializable {
         return itens;
     }
 
-    public float total(){
-        return 1;
+    public Double getTotal(){
+        double sum =0.0;
+        for(OrderItem x : itens){
+            sum += x.getSubTotal();
+        }
+        return sum;
     }
 
     public Payment getPayment() {

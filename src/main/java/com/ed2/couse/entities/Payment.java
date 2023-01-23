@@ -1,5 +1,6 @@
 package com.ed2.couse.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -17,12 +18,16 @@ public class Payment implements Serializable {
     private Integer id;
     private Instant moment;
 
+
+    @JsonIgnore
     @OneToOne
     @MapsId
     private Order order;
 
     public Payment() {
     }
+
+
 
     public Payment(Integer id, Instant moment, Order order) {
         this.id = id;
